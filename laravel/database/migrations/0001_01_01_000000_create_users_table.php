@@ -14,9 +14,12 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
             $table->string('password');
+            $table->string('email')->unique();
+            $table->integer("consumed_size")->default(0);
+            $table->integer("number_of_folders")->default(1);
             $table->timestamp('email_verified_at')->nullable();
+            $table->foreignId("folder_id")->constrained('folders');
             $table->rememberToken();
             $table->timestamps();
         });

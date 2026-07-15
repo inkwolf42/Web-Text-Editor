@@ -25,9 +25,8 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      login(form)
+      login(form).then(()=>navigate("/"))
 
-      navigate("/dashboard");
     } catch (err) {
         if (err.response?.status === 422 && err.response.data?.errors) {
         const fieldErrors = {};

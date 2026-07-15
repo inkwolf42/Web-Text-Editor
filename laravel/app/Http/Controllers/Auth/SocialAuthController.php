@@ -44,15 +44,12 @@ class SocialAuthController extends Controller
                 "provider"    => "google",
                 "provider_id" => $socialUser->getId(),
             ]);
+
+            $user->folder->create(["name"=>"Home","owner_id"=>$user->id]);
         }
 
         $token = $user->createToken("user_token")->plainTextToken;
 
         return redirect(config('app.frontend_url') . '/auth/callback?token=' . $token);
-
-        // return MessageResponce::returnData([
-        //     'user'  => $user,
-        //     'token' => $token,
-        // ], 201);
     }
 }

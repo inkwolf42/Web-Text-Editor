@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Custom\MessageResponce;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
+use App\Models\Folder;
 use App\Models\SocialAccounts;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -56,11 +58,17 @@ class UserAuthController extends Controller
             return MessageResponce::fail($validator->errors()->first());
         }
 
+        $folder = Folder::create(["name"=>"Home"]);
+
         $user = User::create([
             'name'     => $request->name,
             'email'    => $request->email,
             'password' => Hash::make($request->password),
+            'folder_id'=> $folder->id
         ]);
+
+        $folder->update(['owner_id'=>$user->id]);
+
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
@@ -79,8 +87,6 @@ class UserAuthController extends Controller
             return MessageResponce::fail('Unauthenticated.', 401);
         }
 
-        return MessageResponce::returnData([
-            'user' => $user,
-        ]);
+        return new UserResource($user);
     }
 }

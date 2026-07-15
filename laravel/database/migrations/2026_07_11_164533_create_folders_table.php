@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('folders', function (Blueprint $table) {
             $table->id();
             $table->string("name",255);
-            $table->foreignId("owner")->constrained("users")->onDelete("cascade");
+            $table->integer("owner_id")->nullable();
+            $table->foreignId("folder_id")->nullable()->constrained('folders')->onDelete("cascade");
             $table->timestamps();
 
-            $table->unique(["name","owner"]);
+            $table->unique(["name","folder_id"]);
         });
     }
 
@@ -26,6 +27,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('folders');
+        Schema::enableForeignKeyConstraints();
     }
 };

@@ -1,4 +1,4 @@
-import { get } from "./Api";
+import { get, post } from "./Api";
 
 export async function me() {
   return getToken()!=null

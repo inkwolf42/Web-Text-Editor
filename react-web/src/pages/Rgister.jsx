@@ -28,9 +28,8 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      register(form)
+      register(form).then(()=>navigate("/"))
 
-      navigate("/dashboard");
     } catch (err) {
       if (err.response?.status === 422 && err.response.data?.errors) {
         const fieldErrors = {};
