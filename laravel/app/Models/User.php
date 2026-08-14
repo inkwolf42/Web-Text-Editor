@@ -32,6 +32,22 @@ class User extends Authenticatable
         return $this::$folder_limit;
     }
 
+    public function getOrCreateFolder(): Folder
+    {
+        if (!$this->folder) {
+
+            $folder = Folder::create(["name"=>"Home","owner_id"=>$this->id]);
+
+            $this->update([
+                'folder_id'=> $folder->id
+            ]);
+
+            return $folder;
+        }
+
+        return $this->folder;
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -50,6 +66,7 @@ class User extends Authenticatable
     }
 
     public function folder(): BelongsTo{
+
         return $this->belongsTo(Folder::class);
     }
 

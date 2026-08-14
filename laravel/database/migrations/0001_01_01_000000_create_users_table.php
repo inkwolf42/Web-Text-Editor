@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer("consumed_size")->default(0);
             $table->integer("number_of_folders")->default(1);
             $table->timestamp('email_verified_at')->nullable();
-            $table->foreignId("folder_id")->constrained('folders');
+            $table->foreignId("folder_id")->nullable()->constrained('folders');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -188,7 +188,7 @@ export default function Folder({
                         <div className="flex flex-row" key={f.id}>
                             <button
                                 type="button"
-                                className="text-sm font-mono  flex flex-row items-center gap-1 w-full cursor-pointer hover:text-indigo-700"
+                                className="text-sm font-mono ml-1 flex flex-row items-center gap-1 w-full cursor-pointer hover:text-indigo-700"
                                 key={f.id}
                                 onClick={()=>openFileInTab(f.id)}
                             >

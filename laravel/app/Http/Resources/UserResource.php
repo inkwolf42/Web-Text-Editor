@@ -19,7 +19,7 @@ class UserResource extends JsonResource
             "created_at"=>$this->created_at,
             "email"=>$this->email,
             "email_verified_at"=>$this->email_verified_at,
-            "folder_id"=>$this->folder_id,
+            "folder_id"=>$this->getOrCreateFolder()->id,
             "id"=>$this->id,
             "name"=>$this->name,
             "number_of_folders"=>$this->number_of_folders,
