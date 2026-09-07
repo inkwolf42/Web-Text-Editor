@@ -1,0 +1,41 @@
+services:
+    react-web:
+        build:
+            context: react-web
+            args:
+                VITE_API_URL: http://localhost:8000/api
+        container_name: react-web
+        ports:
+            - "8080:80"
+        depends_on:
+            - laravel-nginx
+
+    laravel:
+        build: laravel
+        container_name: laravel
+        expose:
+            - "9000"
+        volumes:
+            - ./laravel:/var/www
+            - laravel_vendor:/var/www/vendor
+            - laravel_storage:/var/www/storage
+            - laravel_database:/var/www/database
+
+
+    laravel-nginx:
+        image: nginx:stable-alpine
+        container_name: laravel-nginx
+        ports:
+        - "8000:80"
+        volumes:
+        - ./laravel:/var/www
+        - ./laravel/nginx.conf:/etc/nginx/conf.d/default.conf
+        - laravel_vendor:/var/www/vendor
+        depends_on:
+        - laravel
+
+
+volumes:
+  laravel_vendor:
+  laravel_storage:
+  laravel_database:
